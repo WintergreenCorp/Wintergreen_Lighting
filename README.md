@@ -1,15 +1,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Voltage Drop Calculator </title>
+  <title>Voltage Drop Calculator (Copper Wire)</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2em; }
-    label, input, select { margin: 0.5em 0; display: block; }
-    .result { margin-top: 1em; font-weight: bold; }
+    body { font-family: Arial, sans-serif; margin: 2em; max-width: 600px; }
+    label, input, select { margin: 0.5em 0; display: block; width: 100%; }
+    button { margin-top: 1em; padding: 0.5em 1em; font-size: 1em; }
+    .result { margin-top: 1.5em; font-weight: bold; font-size: 1.1em; }
+    .disclaimer { margin-top: 2em; font-size: 0.9em; color: #555; border-top: 1px solid #ccc; padding-top: 1em; }
   </style>
 </head>
 <body>
-  <h1>Voltage Drop Calculator </h1>
+  <h1>Voltage Drop Calculator (Copper Only)</h1>
 
   <label for="length">Length of Wire (one-way) in feet:</label>
   <input type="number" id="length" placeholder="e.g. 100" required>
@@ -23,12 +25,21 @@
     <option value="4110">14 AWG</option>
   </select>
 
-  <label for="voltage">Source Voltage (e.g., 12V or 15V):</label>
-  <input type="number" id="voltage" placeholder="e.g. 12" required>
+  <label for="voltage">Source Voltage:</label>
+  <select id="voltage">
+    <option value="12">12 V</option>
+    <option value="13">13 V</option>
+    <option value="14">14 V</option>
+    <option value="15">15 V</option>
+  </select>
 
   <button onclick="calculateDrop()">Calculate</button>
 
   <div class="result" id="output"></div>
+
+  <div class="disclaimer">
+    ⚠️ <strong>Note:</strong> For optimal performance and to ensure safe operation of low-voltage lighting systems, the voltage at the fixture should not drop below <strong>10.5 volts</strong>. Excessive voltage drop can result in dim or malfunctioning fixtures and potential long-term damage.
+  </div>
 
   <script>
     function calculateDrop() {
@@ -39,17 +50,24 @@
       const V_source = parseFloat(document.getElementById('voltage').value);
 
       if (isNaN(L) || isNaN(I) || isNaN(CM) || isNaN(V_source)) {
-        document.getElementById('output').innerText = "Please fill in all fields correctly.";
+        document.getElementById('output').innerText = "⚠️ Please fill in all fields correctly.";
         return;
       }
 
       const V_drop = (2 * K * L * I) / CM;
-      const percentDrop = (V_drop / V_source) * 100;
+      const V_end = V_source - V_drop;
 
       document.getElementById('output').innerText =
-        `Voltage Drop: ${V_drop.toFixed(2)} V\nVoltage Drop Percentage: ${percentDrop.toFixed(2)}%`;
+        `🔋 Voltage Drop: ${V_drop.toFixed(2)} V\\n⚡ Voltage at Fixture: ${V_end.toFixed(2)} V`;
     }
   </script>
 </body>
 </html>
+"""
 
+# Save the updated HTML with disclaimer
+file_path_disclaimer = "/mnt/data/voltage_drop_calculator_with_disclaimer.html"
+with open(file_path_disclaimer, "w") as file:
+    file.write(html_code_with_disclaimer)
+
+file_path_disclaimer
