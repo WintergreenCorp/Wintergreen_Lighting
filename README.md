@@ -67,11 +67,4 @@
     </script>
 </body>
 </html>
-"""
 
-# Save to file
-file_path = "/mnt/data/voltage_drop_calculator_wattage_based.html"
-with open(file_path, "w") as f:
-    f.write(calculator_html)
-
-file_path
