@@ -13,7 +13,7 @@
 <body>
   <h1>Voltage Drop Calculator </h1>
 
-  <label for="length">Length of Wire (feet) :</label>
+  <label for="length">Length of Wire (Feet) :</label>
   <input type="number" id="length" placeholder="e.g. 100" required>
 
   <label for="current">Current (Amps):</label>
