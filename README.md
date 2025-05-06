@@ -22,18 +22,17 @@
         <option value="14">14V</option>
         <option value="15">15V</option>
     </select>
-
+    
+<label for="gauge">Wire Gauge:</label>
+    <select id="gauge">
+        <option value="12">12 AWG</option>
+        <option value="14">14 AWG</option>
+    </select>
     <label for="distance">One-Way Distance (Feet):</label>
     <input type="number" id="distance" placeholder="Enter distance in feet">
 
     <label for="wattage">Load Wattage (Wattage):</label>
     <input type="number" id="wattage" placeholder="Enter wattage">
-
-    <label for="gauge">Wire Gauge:</label>
-    <select id="gauge">
-        <option value="12">12 AWG</option>
-        <option value="14">14 AWG</option>
-    </select>
 
     <button onclick="calculateDrop()">Calculate Voltage</button>
     <div class="result" id="result"></div>
