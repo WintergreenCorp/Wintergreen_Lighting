@@ -23,10 +23,10 @@
         <option value="15">15V</option>
     </select>
 
-    <label for="distance">One-Way Distance (ft):</label>
+    <label for="distance">One-Way Distance (Feet):</label>
     <input type="number" id="distance" placeholder="Enter distance in feet">
 
-    <label for="wattage">Load Wattage (W):</label>
+    <label for="wattage">Load Wattage (Wattage):</label>
     <input type="number" id="wattage" placeholder="Enter wattage">
 
     <label for="gauge">Wire Gauge:</label>
