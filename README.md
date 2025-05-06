@@ -1,8 +1,7 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Voltage Drop Calculator (Copper Wire)</title>
+  <title>Voltage Drop Calculator </title>
   <style>
     body { font-family: Arial, sans-serif; margin: 2em; }
     label, input, select { margin: 0.5em 0; display: block; }
@@ -10,7 +9,7 @@
   </style>
 </head>
 <body>
-  <h1>Voltage Drop Calculator (Copper Only)</h1>
+  <h1>Voltage Drop Calculator </h1>
 
   <label for="length">Length of Wire (one-way) in feet:</label>
   <input type="number" id="length" placeholder="e.g. 100" required>
@@ -24,7 +23,7 @@
     <option value="4110">14 AWG</option>
   </select>
 
-  <label for="voltage">Source Voltage (e.g., 12V or 24V):</label>
+  <label for="voltage">Source Voltage (e.g., 12V or 15V):</label>
   <input type="number" id="voltage" placeholder="e.g. 12" required>
 
   <button onclick="calculateDrop()">Calculate</button>
