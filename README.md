@@ -7,7 +7,9 @@
         label { display: block; margin-top: 10px; }
         input, select { width: 100%; padding: 8px; margin-top: 5px; }
         button { margin-top: 15px; padding: 10px 20px; }
-        .result { margin-top: 20px; font-weight: bold; }
+        .result { margin-top: 20px; font-weight: bold; font-size: 1.1em; }
+        .status-good { color: green; font-weight: bold; }
+        .status-bad { color: red; font-weight: bold; }
         .disclaimer { margin-top: 20px; font-size: 0.9em; color: #555; }
     </style>
 </head>
@@ -33,7 +35,7 @@
         <option value="14">14 AWG</option>
     </select>
 
-    <button onclick="calculateDrop()">Calculate Voltage at Load</button>
+    <button onclick="calculateDrop()">Calculate Voltage</button>
     <div class="result" id="result"></div>
     <div class="disclaimer">
         ⚠️ In professional lighting systems, voltage at the load should not drop below 10.5V. Ensure wire sizing and power requirements maintain safe operational levels.
@@ -51,8 +53,10 @@
             const wattage = parseFloat(document.getElementById("wattage").value);
             const gauge = document.getElementById("gauge").value;
 
+            const resultDiv = document.getElementById("result");
+
             if (isNaN(distance) || isNaN(wattage)) {
-                document.getElementById("result").innerText = "Please enter valid distance and wattage.";
+                resultDiv.innerHTML = "Please enter valid distance and wattage.";
                 return;
             }
 
@@ -61,8 +65,15 @@
             const voltageDrop = 2 * distance * resistance * current;
             const finalVoltage = voltage - voltageDrop;
 
-            document.getElementById("result").innerText = 
-                `Voltage at load: ${finalVoltage.toFixed(2)}V`;
+            const status = finalVoltage >= 10.5
+                ? "<span class='status-good'>✔️ Good</span>"
+                : "<span class='status-bad'>❌ Overloaded</span>";
+
+            resultDiv.innerHTML = `
+                Voltage at load: ${finalVoltage.toFixed(2)}V<br>
+                Voltage drop: ${voltageDrop.toFixed(2)}V<br>
+                ${status}
+            `;
         }
     </script>
 </body>
