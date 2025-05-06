@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Voltage Drop Calculator (Copper Wire)</title>
+  <title>Voltage Drop Calculator </title>
   <style>
     body { font-family: Arial, sans-serif; margin: 2em; max-width: 600px; }
     label, input, select { margin: 0.5em 0; display: block; width: 100%; }
@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <h1>Voltage Drop Calculator (Copper Only)</h1>
+  <h1>Voltage Drop Calculator </h1>
 
   <label for="length">Length of Wire (one-way) in feet:</label>
   <input type="number" id="length" placeholder="e.g. 100" required>
@@ -63,11 +63,5 @@
   </script>
 </body>
 </html>
-"""
 
-# Save the updated HTML with disclaimer
-file_path_disclaimer = "/mnt/data/voltage_drop_calculator_with_disclaimer.html"
-with open(file_path_disclaimer, "w") as file:
-    file.write(html_code_with_disclaimer)
 
-file_path_disclaimer
