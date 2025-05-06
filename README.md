@@ -1,67 +1,77 @@
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Voltage Drop Calculator </title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2em; max-width: 600px; }
-    label, input, select { margin: 0.5em 0; display: block; width: 100%; }
-    button { margin-top: 1em; padding: 0.5em 1em; font-size: 1em; }
-    .result { margin-top: 1.5em; font-weight: bold; font-size: 1.1em; }
-    .disclaimer { margin-top: 2em; font-size: 0.9em; color: #555; border-top: 1px solid #ccc; padding-top: 1em; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Voltage Drop Calculator </title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        label { display: block; margin-top: 10px; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 15px; padding: 10px 20px; }
+        .result { margin-top: 20px; font-weight: bold; }
+        .disclaimer { margin-top: 20px; font-size: 0.9em; color: #555; }
+    </style>
 </head>
 <body>
-  <h1>Voltage Drop Calculator </h1>
+    <h2>Voltage Drop Calculator </h2>
+    <label for="voltage">Source Voltage:</label>
+    <select id="voltage">
+        <option value="12">12V</option>
+        <option value="13">13V</option>
+        <option value="14">14V</option>
+        <option value="15">15V</option>
+    </select>
 
-  <label for="length">Length of Wire (Feet) :</label>
-  <input type="number" id="length" placeholder="e.g. 100" required>
+    <label for="distance">One-Way Distance (ft):</label>
+    <input type="number" id="distance" placeholder="Enter distance in feet">
 
-  <label for="current">Current (Amps):</label>
-  <input type="number" id="current" placeholder="e.g. 10" required>
+    <label for="wattage">Load Wattage (W):</label>
+    <input type="number" id="wattage" placeholder="Enter wattage">
 
-  <label for="awg">Wire Gauge (AWG):</label>
-  <select id="awg">
-    <option value="6530">12 AWG</option>
-    <option value="4110">14 AWG</option>
-  </select>
+    <label for="gauge">Wire Gauge:</label>
+    <select id="gauge">
+        <option value="12">12 AWG</option>
+        <option value="14">14 AWG</option>
+    </select>
 
-  <label for="voltage">Source Voltage:</label>
-  <select id="voltage">
-    <option value="12">12 V</option>
-    <option value="13">13 V</option>
-    <option value="14">14 V</option>
-    <option value="15">15 V</option>
-  </select>
+    <button onclick="calculateDrop()">Calculate Voltage at Load</button>
+    <div class="result" id="result"></div>
+    <div class="disclaimer">
+        ⚠️ In professional lighting systems, voltage at the load should not drop below 10.5V. Ensure wire sizing and power requirements maintain safe operational levels.
+    </div>
 
-  <button onclick="calculateDrop()">Calculate</button>
+    <script>
+        const resistancePer1000Ft = {
+            "12": 1.588,
+            "14": 2.525
+        };
 
-  <div class="result" id="output"></div>
+        function calculateDrop() {
+            const voltage = parseFloat(document.getElementById("voltage").value);
+            const distance = parseFloat(document.getElementById("distance").value);
+            const wattage = parseFloat(document.getElementById("wattage").value);
+            const gauge = document.getElementById("gauge").value;
 
-  <div class="disclaimer">
-    ⚠️ <strong>Note:</strong> For optimal performance and to ensure safe operation of low-voltage lighting systems, the voltage at the fixture should not drop below <strong>10.5 volts</strong>. Excessive voltage drop can result in dim or malfunctioning fixtures and potential long-term damage.
-  </div>
+            if (isNaN(distance) || isNaN(wattage)) {
+                document.getElementById("result").innerText = "Please enter valid distance and wattage.";
+                return;
+            }
 
-  <script>
-    function calculateDrop() {
-      const K = 12.9; // copper constant
-      const L = parseFloat(document.getElementById('length').value);
-      const I = parseFloat(document.getElementById('current').value);
-      const CM = parseFloat(document.getElementById('awg').value);
-      const V_source = parseFloat(document.getElementById('voltage').value);
+            const resistance = resistancePer1000Ft[gauge] / 1000; // Ohms per foot
+            const current = wattage / voltage;
+            const voltageDrop = 2 * distance * resistance * current;
+            const finalVoltage = voltage - voltageDrop;
 
-      if (isNaN(L) || isNaN(I) || isNaN(CM) || isNaN(V_source)) {
-        document.getElementById('output').innerText = "⚠️ Please fill in all fields correctly.";
-        return;
-      }
-
-      const V_drop = (2 * K * L * I) / CM;
-      const V_end = V_source - V_drop;
-
-      document.getElementById('output').innerText =
-        `🔋 Voltage Drop: ${V_drop.toFixed(2)} V\\n⚡ Voltage at Fixture: ${V_end.toFixed(2)} V`;
-    }
-  </script>
+            document.getElementById("result").innerText = 
+                `Voltage at load: ${finalVoltage.toFixed(2)}V`;
+        }
+    </script>
 </body>
 </html>
+"""
 
+# Save to file
+file_path = "/mnt/data/voltage_drop_calculator_wattage_based.html"
+with open(file_path, "w") as f:
+    f.write(calculator_html)
 
+file_path
